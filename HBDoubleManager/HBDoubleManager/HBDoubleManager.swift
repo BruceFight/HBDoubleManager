@@ -16,6 +16,14 @@ class HBDoubleManager: UIView ,UIScrollViewDelegate {
     fileprivate var topDivisionView = UIView()
     fileprivate var counts : Int = 0
     
+    /** 是否Bounce
+     */
+    open var kIfBounce : Bool = true {
+        didSet{
+            bottomClassView.bounces = kIfBounce
+        }
+    }
+    
     /** 滚动类型 -> 见HBScrollType
      */
     open var scrollType : HBScrollType = HBScrollType.default {
@@ -120,8 +128,10 @@ class HBDoubleManager: UIView ,UIScrollViewDelegate {
             }else if self.counts > 1 && self.counts <= 3 {
                 offsetX = CGFloat(_curIndex) * _width
             }else if self.counts > 3 {
-                if _curIndex == 1 || _curIndex == (self.counts - 1) {
+                if _curIndex == 0 {
                     offsetX = 0
+                }else if _curIndex == (self.counts - 1) {
+                    offsetX = 2 * _width
                 }else {
                     offsetX = _width
                 }
@@ -143,28 +153,28 @@ extension HBDoubleManager {
     //MARK: - 💕public Interface Of SetTopClassView
     /**
      * height - topClassView的高度(required)
-     * headBtnIndex - 首亮按钮索引值(optional,default '0')
+     * head - 首亮按钮索引值(optional,default '0')
      * position - 正常按钮图片数组(optional,default 'Left')
-     * topicInnerMargin - 按钮内部边界间隔(optional,default '0')
-     * topicOuterMargin - 按钮间间隔(optional,default '0')
+     * inner - 按钮内部边界间隔(optional,default '0')
+     * outer - 按钮间间隔(optional,default '0')
+     * global - 全局左右距父级边界值(optional,default '0')
      * titles - 按钮文本数组(required)
      * images - 正常按钮图片数组(optional)
-     * highLightedImages - 高亮按钮图片数组(optional)
-     * normalTextColors - 正常文本颜色数组(required)
-     * highLightedTextColors - 高亮文本颜色数组(required)
-     * globalMargin - 全局左右距父级边界值(optional,default '0')
+     * h_images - 高亮按钮图片数组(optional)
+     * textColors - 正常文本颜色数组(required)
+     * h_textColors - 高亮文本颜色数组(required)
      */
-    public func HB_setMain(height:CGFloat!,
-                                   headIndex:Int = 0,
-                                   position:HBTopicButtonImagePositionType = .left,
-                                   topicInnerMargin:CGFloat = 0,
-                                   topicOuterMargin:CGFloat = 0,
-                                   titles:[String]!,
-                                   images:[String]?,
-                                   highImages:[String]?,
-                                   textColors:[UIColor]?,
-                                   highTextColors:[UIColor]?,
-                                   globalMargin:CGFloat = 0) -> () {
+    public func HB_getTop(height:CGFloat!,
+                          head:Int = 0,
+                          position:HBImagePositionType = .left,
+                          inner:CGFloat = 0,
+                          outer:CGFloat = 0,
+                          global:CGFloat = 0,
+                          titles:[String]!,
+                          images:[String]?,
+                          h_images:[String]?,
+                          textColors:[UIColor]?,
+                          h_textColors:[UIColor]?) -> () {
         counts = titles.count
         if titles.count <= 0 { return }
         for _ in 0 ..< self.counts {
@@ -172,21 +182,21 @@ extension HBDoubleManager {
         }
         self.bottomClassView.resetHolders()
         self.topClassHeight = height
-        self._curIndex = headIndex
+        self._curIndex = head
         topClassView.imageWH = imageWH
         topClassView.imageToEdge = imageToEdge
         topClassView.contentMargin = contentMargin
         topClassView.topicFont = topicFont
         topClassView.position = position
-        topClassView.headBtnIndex = headIndex
-        topClassView.globalMargin = globalMargin
-        topClassView.topicInnerMargin = topicInnerMargin
-        topClassView.topicOuterMargin = topicOuterMargin
+        topClassView.headBtnIndex = head
+        topClassView.globalMargin = global
+        topClassView.topicInnerMargin = inner
+        topClassView.topicOuterMargin = outer
         topClassView.setTopics(titles: titles,
                                images: images,
-                               highImages: highImages,
+                               highImages: h_images,
                                textColors: textColors,
-                               highTextColors: highTextColors)
+                               highTextColors: h_textColors)
         
         self.addSubview(self.topClassView)
         self.topDivisionView.backgroundColor = HBRGB(0xECECEC)
@@ -223,7 +233,7 @@ extension HBDoubleManager {
         self.bottomClassView.HB_getMainHandler = self.HB_getMain
         self.bottomClassView.tag = self.hash
         self.bottomClassView.delegate = self
-        self.bottomClassView.headIndex = headIndex
+        self.bottomClassView.headIndex = head
         self.addSubview(bottomClassView)
     }
 

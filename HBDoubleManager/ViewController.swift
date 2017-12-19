@@ -9,21 +9,23 @@
 import UIKit
 
 class ViewController: UIViewController {
+    fileprivate let colors = [UIColor.red,.blue,.black,.orange,.yellow,.green,.gray]
     var manager : HBDoubleManager?
     override func viewDidLoad() {
         super.viewDidLoad()
-        manager = HBDoubleManager.init(frame: self.view.bounds, view: view)
+        
+        manager = HBDoubleManager.init(frame: view.bounds, view: view)
+        manager?.scrollType = .limited
         let label = UIButton()
         label.setTitle("external", for: .normal)
         label.setTitleColor(.red, for: .normal)
         label.addTarget(self, action: #selector(dosomething), for: .touchUpInside)
         manager?.addExternal(external:label)
-        self.view.addSubview(manager!)
+        view.addSubview(manager!)
         
         manager?.HB_getMain = {[weak self](tag) in
-            let colors = [UIColor.red,.blue,.black,.orange,.yellow,.green,.gray]
             let view = UIView()
-            view.backgroundColor = colors[tag]
+            view.backgroundColor = self?.colors[tag]
             return view
         }
         
@@ -31,29 +33,28 @@ class ViewController: UIViewController {
             print("❤️ --- \(tag)")
         }
         
-        manager?.HB_setMain(height: 55,
-                            headIndex: 3,
-                            position: .left,
-                            topicInnerMargin: 20,
-                            topicOuterMargin: 20,
-                            titles: ["中","国","共","产","党","万","岁"],
-                            images: nil,
-                            highImages: nil,
-                            textColors: nil,
-                            highTextColors: nil,
-                            globalMargin: 15)
-        
+        manager?.HB_getTop(height: 55,
+                           head: 0,
+                           position: .left,
+                           inner: 20,
+                           outer: 20,
+                           global: 15,
+                           titles: ["中","国"],//,"共","产","党","万","岁"
+                           images: nil,
+                           h_images: nil,
+                           textColors: nil,
+                           h_textColors: nil)
         
     }
     
     @objc func dosomething() -> () {
         manager?.HB_showRedView(tag: 0)
     }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
 
 }
 

@@ -18,7 +18,7 @@ class HBTopClassView: UIScrollView {
     public var headBtnIndex : Int = 0
     public var topicOuterMargin : CGFloat = 10
     public var topicInnerMargin : CGFloat = 10
-    public var position : HBTopicButtonImagePositionType = .left
+    public var position : HBImagePositionType = .left
     public var topicBtns = [HBTopicButton]()
     public var externals = [AnyObject]()
     

@@ -11,7 +11,7 @@ import UIKit
 /** 按钮类型
  * 根据按钮中图片的位置来定义了 左,上,右,下 四种样式
  */
-enum HBTopicButtonImagePositionType {
+enum HBImagePositionType {
     case left
     case top
     case right
@@ -29,7 +29,7 @@ class HBTopicButton: UIButton {//HBTopicButton
     fileprivate var innerMargin : CGFloat = 10
     fileprivate var imageToEdge : CGFloat = 10
     fileprivate var contentMargin : CGFloat = 5
-    fileprivate var position = HBTopicButtonImagePositionType.left
+    fileprivate var position = HBImagePositionType.left
     
     fileprivate var normalImage : UIImage?
     fileprivate var highImage : UIImage?
@@ -49,7 +49,7 @@ class HBTopicButton: UIButton {//HBTopicButton
                    imageToEdge:CGFloat,
                    contentMargin:CGFloat,
                    topicFont:UIFont,
-                   position:HBTopicButtonImagePositionType) -> () {
+                   position:HBImagePositionType) -> () {
         self.imageWH = imageWH
         self.position = position
         self.imageToEdge = imageToEdge
