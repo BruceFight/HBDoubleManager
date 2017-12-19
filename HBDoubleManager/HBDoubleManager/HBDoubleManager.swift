@@ -8,7 +8,7 @@
 
 
 import UIKit
-class HBDoubleManager: UIView ,UIScrollViewDelegate{
+class HBDoubleManager: UIView ,UIScrollViewDelegate {
 
     fileprivate var topClassView = HBTopClassView()
     fileprivate var bottomClassView = HBBotClassView()
@@ -82,7 +82,11 @@ class HBDoubleManager: UIView ,UIScrollViewDelegate{
         guard let nextV = view.next else {return}
         if nextV.isKind(of: UIViewController.self) {
             _hostVc = nextV as? UIViewController
-            _hostVc?.automaticallyAdjustsScrollViewInsets = false
+            if #available(iOS 11.0, *) {
+                
+            }else {
+                _hostVc?.automaticallyAdjustsScrollViewInsets = false
+            }
         }else if nextV.isKind(of: UIView.self) {
             if let nextV = nextV.next as? UIView {
                 self.setHostVc(view: nextV)

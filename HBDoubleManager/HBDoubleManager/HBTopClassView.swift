@@ -38,6 +38,7 @@ class HBTopClassView: UIScrollView {
         self.backgroundColor = UIColor.white
         self.showsVerticalScrollIndicator = false
         self.showsHorizontalScrollIndicator = false
+        self.contentInsetAdjustmentBehavior = .never
         setTrackView()
     }
     

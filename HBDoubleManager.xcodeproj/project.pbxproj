@@ -139,11 +139,11 @@
 		2AAD46F81FB1E18C00804753 /* HBDoubleManager */ = {
 			isa = PBXGroup;
 			children = (
-				2AAD46F91FB1E18C00804753 /* HBBotClassView.swift */,
 				2AAD46FA1FB1E18C00804753 /* HBDoubleManager.swift */,
-				2AAD46FB1FB1E18C00804753 /* HBHolderView.swift */,
 				2AAD46FC1FB1E18C00804753 /* HBTopClassView.swift */,
 				2AAD46FD1FB1E18C00804753 /* HBTopicButton.swift */,
+				2AAD46F91FB1E18C00804753 /* HBBotClassView.swift */,
+				2AAD46FB1FB1E18C00804753 /* HBHolderView.swift */,
 			);
 			path = HBDoubleManager;
 			sourceTree = "<group>";
