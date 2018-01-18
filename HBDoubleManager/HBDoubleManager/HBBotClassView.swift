@@ -22,8 +22,8 @@ class HBBotClassView: UIScrollView {
     fileprivate var _width : CGFloat = 0
     public var headIndex : Int = 0 {
         didSet{
-            if let primeView = self.HB_getMainHandler?(headIndex) {
-                if let _ = self.mains.HB_object(for: headIndex) {
+            if let primeView = self.hb_getMainHandler?(headIndex) {
+                if let _ = self.mains.hb_object(for: headIndex) {
                     self.mains[headIndex] = primeView
                     self.setFirstMain(main:primeView)
                 }else {
@@ -33,7 +33,7 @@ class HBBotClassView: UIScrollView {
         }
     }
     //@ 视图切换回调
-    public var HB_getMainHandler : ((_ tag:Int) -> (UIView?))?
+    public var hb_getMainHandler : ((_ tag:Int) -> (UIView?))?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -158,9 +158,9 @@ class HBBotClassView: UIScrollView {
                 self.scrollLeftLimitedAndEqualThree(range: _curIndex - 2 ..< self.mains.count, minV: minV, maxV: maxV, centerV: centerV)
             }else {
                 if self.mains.count <= 3 {
-                    if var main = self.mains.HB_object(for: _curIndex) {
+                    if var main = self.mains.hb_object(for: _curIndex) {
                         if main.isKind(of: HBHolderView.self) {
-                            guard let newMain = HB_getMainHandler?(_curIndex) else{return}
+                            guard let newMain = hb_getMainHandler?(_curIndex) else{return}
                             main = newMain
                         }
                         centerV.main = main
@@ -180,9 +180,9 @@ class HBBotClassView: UIScrollView {
                                                     maxV:HBHolderView,
                                                     centerV:HBHolderView) -> () {
         for i in range {
-            if var main = self.mains.HB_object(for: i) {
+            if var main = self.mains.hb_object(for: i) {
                 if main.isKind(of: HBHolderView.self) {
-                    guard let newMain = HB_getMainHandler?(i) else{return}
+                    guard let newMain = hb_getMainHandler?(i) else{return}
                     main = newMain
                 }
                 if i == range.startIndex {
@@ -207,9 +207,9 @@ class HBBotClassView: UIScrollView {
         maxF.origin.x += _width
         minV.frame = maxF
         // 创建内容
-        if var main = self.mains.HB_object(for: _curIndex) {
+        if var main = self.mains.hb_object(for: _curIndex) {
             if main.isKind(of: HBHolderView.self) {
-                guard let newMain = HB_getMainHandler?(_curIndex) else{return}
+                guard let newMain = hb_getMainHandler?(_curIndex) else{return}
                 main = newMain
             }
             maxV.main = main
@@ -222,9 +222,9 @@ class HBBotClassView: UIScrollView {
         })
         
         let next = self.next(current: _curIndex)
-        if var nextMain = self.mains.HB_object(for: next) {
+        if var nextMain = self.mains.hb_object(for: next) {
             if nextMain.isKind(of: HBHolderView.self) {
-                guard let newMain = HB_getMainHandler?(next) else{return}
+                guard let newMain = hb_getMainHandler?(next) else{return}
                 nextMain = newMain
             }
             minV.main = nextMain
@@ -232,18 +232,18 @@ class HBBotClassView: UIScrollView {
         }
         
         let pre = self.pre(current: _curIndex)
-        if var preMain = self.mains.HB_object(for: pre) {
+        if var preMain = self.mains.hb_object(for: pre) {
             if preMain.isKind(of: HBHolderView.self) {
-                guard let newMain = HB_getMainHandler?(pre) else{return}
+                guard let newMain = hb_getMainHandler?(pre) else{return}
                 preMain = newMain
             }
             centerV.main = preMain
             self.mains[pre] = preMain
         }
         
-        if let _ = self.holders.HB_object(for: 0) ,
-            let _ = self.holders.HB_object(for: 1) ,
-            let _ = self.holders.HB_object(for: 2) {
+        if let _ = self.holders.hb_object(for: 0) ,
+            let _ = self.holders.hb_object(for: 1) ,
+            let _ = self.holders.hb_object(for: 2) {
             self.holders[0] = centerV
             self.holders[1] = maxV
             self.holders[2] = minV
@@ -272,9 +272,9 @@ class HBBotClassView: UIScrollView {
                 self.scrollRightLimitedAndEqualThree(range: _curIndex - 2 ..< self.mains.count, minV: minV, maxV: maxV, centerV: centerV)
             }else {
                 if self.mains.count <= 3 {
-                    if var main = self.mains.HB_object(for: _curIndex) {
+                    if var main = self.mains.hb_object(for: _curIndex) {
                         if main.isKind(of: HBHolderView.self) {
-                            guard let newMain = HB_getMainHandler?(_curIndex) else{return}
+                            guard let newMain = hb_getMainHandler?(_curIndex) else{return}
                             main = newMain
                         }
                         centerV.main = main
@@ -295,9 +295,9 @@ class HBBotClassView: UIScrollView {
                                                      maxV:HBHolderView,
                                                      centerV:HBHolderView) -> () {
         for j in range {
-            if var main = self.mains.HB_object(for: j) {
+            if var main = self.mains.hb_object(for: j) {
                 if main.isKind(of: HBHolderView.self) {
-                    guard let newMain = HB_getMainHandler?(j) else{return}
+                    guard let newMain = hb_getMainHandler?(j) else{return}
                     main = newMain
                 }
                 if j == range.startIndex {
@@ -324,9 +324,9 @@ class HBBotClassView: UIScrollView {
         maxV.frame = minF
         
         // 创建内容
-        if var main = self.mains.HB_object(for: _curIndex) {
+        if var main = self.mains.hb_object(for: _curIndex) {
             if main.isKind(of: HBHolderView.self) {
-                guard let newMain = HB_getMainHandler?(_curIndex) else{return}
+                guard let newMain = hb_getMainHandler?(_curIndex) else{return}
                 main = newMain
             }
             minV.main = main
@@ -339,9 +339,9 @@ class HBBotClassView: UIScrollView {
         })
         
         let pre = self.pre(current: _curIndex)
-        if var preMain = self.mains.HB_object(for: pre) {
+        if var preMain = self.mains.hb_object(for: pre) {
             if preMain.isKind(of: HBHolderView.self) {
-                guard let newMain = HB_getMainHandler?(pre) else{return}
+                guard let newMain = hb_getMainHandler?(pre) else{return}
                 preMain = newMain
             }
             maxV.main = preMain
@@ -349,18 +349,18 @@ class HBBotClassView: UIScrollView {
         }
         
         let next = self.next(current: _curIndex)
-        if var nextMain = self.mains.HB_object(for: next) {
+        if var nextMain = self.mains.hb_object(for: next) {
             if nextMain.isKind(of: HBHolderView.self) {
-                guard let newMain = HB_getMainHandler?(next) else{return}
+                guard let newMain = hb_getMainHandler?(next) else{return}
                 nextMain = newMain
             }
             centerV.main = nextMain
             self.mains[next] = nextMain
         }
         
-        if let _ = self.holders.HB_object(for: 0) ,
-            let _ = self.holders.HB_object(for: 1) ,
-            let _ = self.holders.HB_object(for: 2) {
+        if let _ = self.holders.hb_object(for: 0) ,
+            let _ = self.holders.hb_object(for: 1) ,
+            let _ = self.holders.hb_object(for: 2) {
             self.holders[0] = maxV
             self.holders[1] = minV
             self.holders[2] = centerV
@@ -375,9 +375,9 @@ class HBBotClassView: UIScrollView {
                    maxV:HBHolderView,
                    _curIndex:Int) -> () {
             // 创建内容
-        if var main = self.mains.HB_object(for: _curIndex) {
+        if var main = self.mains.hb_object(for: _curIndex) {
             if main.isKind(of: HBHolderView.self) {
-                guard let newMain = HB_getMainHandler?(_curIndex) else{return}
+                guard let newMain = hb_getMainHandler?(_curIndex) else{return}
                 main = newMain
             }
             if _curIndex == 0 {
@@ -387,8 +387,8 @@ class HBBotClassView: UIScrollView {
             }
             self.mains[_curIndex] = main
         }
-        if let _ = self.holders.HB_object(for: 0) ,
-        let _ = self.holders.HB_object(for: 1) {
+        if let _ = self.holders.hb_object(for: 0) ,
+        let _ = self.holders.hb_object(for: 1) {
             self.holders[0] = minV
             self.holders[1] = maxV
         }
@@ -402,8 +402,8 @@ class HBBotClassView: UIScrollView {
         let minVF = minV.frame
         minV.frame = maxV.frame
         maxV.frame = minVF
-        if let _ = self.holders.HB_object(for: 0) ,
-        let _ = self.holders.HB_object(for: 2) {
+        if let _ = self.holders.hb_object(for: 0) ,
+        let _ = self.holders.hb_object(for: 2) {
             self.holders[0] = maxV
             self.holders[2] = minV
         }

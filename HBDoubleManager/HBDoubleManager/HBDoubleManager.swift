@@ -24,7 +24,7 @@ class HBDoubleManager: UIView ,UIScrollViewDelegate {
         }
     }
     
-    /** 滚动类型 -> 见HBScrollType
+    /** 滚动类型 -> 见hbScrollType
      */
     open var scrollType : HBScrollType = HBScrollType.default {
         didSet{
@@ -67,11 +67,11 @@ class HBDoubleManager: UIView ,UIScrollViewDelegate {
     
     /** 视图切换回调
      */
-    public var HB_getMain : ((_ tag:Int) -> (UIView?))?
+    public var hb_getMain : ((_ tag:Int) -> (UIView?))?
     
     /** topic点击回调
      */
-    public var HB_topicClicked : ((_ topicBtnTag:Int) -> ())?
+    public var hb_topicClicked : ((_ topicBtnTag:Int) -> ())?
     
     //MARK: - Interface
     // Init
@@ -164,7 +164,7 @@ extension HBDoubleManager {
      * textColors - 正常文本颜色数组(required)
      * h_textColors - 高亮文本颜色数组(required)
      */
-    public func HB_getTop(height:CGFloat!,
+    public func hb_getTop(height:CGFloat!,
                           head:Int = 0,
                           position:HBImagePositionType = .left,
                           inner:CGFloat = 0,
@@ -230,7 +230,7 @@ extension HBDoubleManager {
             }
         }
         self.addSubview(topDivisionView)
-        self.bottomClassView.HB_getMainHandler = self.HB_getMain
+        self.bottomClassView.hb_getMainHandler = self.hb_getMain
         self.bottomClassView.tag = self.hash
         self.bottomClassView.delegate = self
         self.bottomClassView.headIndex = head
@@ -239,31 +239,31 @@ extension HBDoubleManager {
 
     /** hide redView
      */
-    public func HB_hideRedView(tag:Int) -> () {
-        self.topClassView.HB_getTopicBtn(tag: tag).redView.isHidden = true
+    public func hb_hideRedView(tag:Int) -> () {
+        self.topClassView.hb_getTopicBtn(tag: tag).redView.isHidden = true
     }
     
     /** show redView
      */
-    public func HB_showRedView(tag:Int) -> () {
-        self.topClassView.HB_getTopicBtn(tag: tag).redView.isHidden = false
+    public func hb_showRedView(tag:Int) -> () {
+        self.topClassView.hb_getTopicBtn(tag: tag).redView.isHidden = false
     }
     
     /** nge topic-button title
      */
-    public func HB_resetTopic(tag:Int,title:String) -> () {
-        self.topClassView.HB_resetTopic(tag: tag, title: title)
+    public func hb_resetTopic(tag:Int,title:String) -> () {
+        self.topClassView.hb_resetTopic(tag: tag, title: title)
     }
     
     /** change top-scrollView top-division-color
      */
-    public func HB_setDivisionColor(color:UIColor) -> () {
+    public func hb_setDivisionColor(color:UIColor) -> () {
         self.topDivisionView.backgroundColor = color
     }
     
     /** Reset TopClassView
      */
-    public func HB_resetTopicsLayoutsWith(offsety:CGFloat) -> () {
+    public func hb_resetTopicsLayoutsWith(offsety:CGFloat) -> () {
         for index in 0 ..< self.topClassView.topicBtns.count {
             let topic = self.topClassView.topicBtns[index]
             let alpha = CGFloat(offsety / topic.bounds.size.height)// 由0-1
@@ -291,7 +291,7 @@ extension HBDoubleManager {
     
     /** 底部BottomClassView占满全屏或初始状态,顶部TopClassView隐藏或显示(Public Interface)
      */
-    public func HB_resetBottomClassViewLayoutWith(offsety:CGFloat) -> () {
+    public func hb_resetBottomClassViewLayoutWith(offsety:CGFloat) -> () {
         let alpha = CGFloat(offsety / topClassView.bounds.size.height)// 由0-1
         if (offsety > 0) && (offsety < topClassView.bounds.size.height) {// >= 0 && <= 1
             UIView.animate(withDuration: 0.25, animations: {
@@ -373,7 +373,7 @@ extension HBDoubleManager {
             kIfCanSet = false
             
             if kIfLeftHasSetted {
-                if let nextView = self.bottomClassView.mains.HB_object(for: self.next(current: _curIndex)) {
+                if let nextView = self.bottomClassView.mains.hb_object(for: self.next(current: _curIndex)) {
                     if !nextView.isKind(of: HBHolderView.self) {
                         kIfLeftHasSetted = false
                     }
@@ -381,7 +381,7 @@ extension HBDoubleManager {
             }
             
             if kIfRightHasSetted {
-                if let preView = self.bottomClassView.mains.HB_object(for: self.pre(current: _curIndex)) {
+                if let preView = self.bottomClassView.mains.hb_object(for: self.pre(current: _curIndex)) {
                     if !preView.isKind(of: HBHolderView.self) {
                         kIfRightHasSetted = false
                     }
@@ -404,7 +404,7 @@ extension HBDoubleManager {
         self.topClassView.jb_setTopicInterface(topic: self.topClassView.topicBtns[_curIndex])
         self._curPoint.x = bottomClassView.contentOffset.x
         //可以传到外面
-        HB_topicClicked?(_curIndex)
+        hb_topicClicked?(_curIndex)
     }
     
 }
@@ -424,7 +424,7 @@ extension HBDoubleManager {
 }
 
 extension Array {
-    func HB_object(for index: Int) -> Element? {
+    func hb_object(for index: Int) -> Element? {
         if index >= 0 && index < self.count {
             return self[index]
         }

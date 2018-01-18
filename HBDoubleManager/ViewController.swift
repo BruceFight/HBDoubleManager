@@ -23,17 +23,17 @@ class ViewController: UIViewController {
         manager?.addExternal(external:label)
         view.addSubview(manager!)
         
-        manager?.HB_getMain = {[weak self](tag) in
+        manager?.hb_getMain = {[weak self](tag) in
             let view = UIView()
             view.backgroundColor = self?.colors[tag]
             return view
         }
         
-        manager?.HB_topicClicked = {[weak self](tag) in
+        manager?.hb_topicClicked = {[weak self](tag) in
             print("❤️ --- \(tag)")
         }
         
-        manager?.HB_getTop(height: 55,
+        manager?.hb_getTop(height: 55,
                            head: 0,
                            position: .left,
                            inner: 20,
@@ -48,7 +48,7 @@ class ViewController: UIViewController {
     }
     
     @objc func dosomething() -> () {
-        manager?.HB_showRedView(tag: 0)
+        manager?.hb_showRedView(tag: 0)
     }
     
     override func didReceiveMemoryWarning() {

@@ -73,26 +73,26 @@ class HBTopClassView: UIScrollView {
                                position: position)
             topicBtn.tag = index
             if let images = images {
-                if let imgString = images.HB_object(for: index) {
+                if let imgString = images.hb_object(for: index) {
                     if let image = UIImage.init(named: imgString) {
                         topicBtn.setNormalImageWith(normalImage: image)
                     }
                 }
             }
             if let highImages = highImages {
-                if let highImgString = highImages.HB_object(for: index) {
+                if let highImgString = highImages.hb_object(for: index) {
                     if let highImage = UIImage.init(named: highImgString) {
                         topicBtn.setHighImageWith(highImage: highImage)
                     }
                 }
             }
             if let textColors = textColors {
-                if let textColor = textColors.HB_object(for: index) {
+                if let textColor = textColors.hb_object(for: index) {
                     topicBtn.setNormalTextColorWith(normalTextColor:textColor)
                 }
             }
             if let highTextColors = highTextColors {
-                if let highTextColor = highTextColors.HB_object(for: index) {
+                if let highTextColor = highTextColors.hb_object(for: index) {
                     topicBtn.setHighTextColorWith(highTextColor: highTextColor)
                 }
             }
@@ -100,14 +100,14 @@ class HBTopClassView: UIScrollView {
             if index == headBtnIndex {
                 selectedTopic = topicBtn
                 if let highImages = highImages {
-                    if let highImgString = highImages.HB_object(for: index) {
+                    if let highImgString = highImages.hb_object(for: index) {
                         if let highImage = UIImage.init(named: highImgString) {
                             topicBtn.setHighImageWith(highImage: highImage)   
                         }
                     }
                 }
                 if let highTextColors = highTextColors {
-                    if let highTextColor = highTextColors.HB_object(for: index) {
+                    if let highTextColor = highTextColors.hb_object(for: index) {
                         topicBtn.setHighTextColorWith(highTextColor: highTextColor)
                     }
                 }
@@ -136,7 +136,7 @@ class HBTopClassView: UIScrollView {
             topBtnWidth = (titles[index] as NSString).size(withAttributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 12)]).width + 2 * topicInnerMargin + imageMarginWidth
 
             contentSizeWidth += topBtnWidth + topicsOuterMargin + 2 * realGlobalMargin
-            if let imgString = images?.HB_object(for: index) {
+            if let imgString = images?.hb_object(for: index) {
                 if let _ = UIImage.init(named: imgString) {
                     switch position {
                     case .left,.right:
@@ -234,7 +234,7 @@ class HBTopClassView: UIScrollView {
     
     /** 重设置 topic 文本
      */
-    public func HB_resetTopic(tag:Int,title:String) -> () {
+    public func hb_resetTopic(tag:Int,title:String) -> () {
         self.titles[tag] = title
         self.layoutSubviews()
     }
@@ -245,7 +245,7 @@ class HBTopClassView: UIScrollView {
     
     /** 获取对应 topic
      */
-    public func HB_getTopicBtn(tag:Int) -> HBTopicButton {
+    public func hb_getTopicBtn(tag:Int) -> HBTopicButton {
         let count = self.topicBtns.count
         if (tag < 0) || (tag >= count) {
             assert(false, "over limit !")
