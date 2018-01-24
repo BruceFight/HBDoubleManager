@@ -41,7 +41,11 @@ class HBBotClassView: UIScrollView {
         self.isPagingEnabled = true
         self.showsVerticalScrollIndicator = false
         self.showsHorizontalScrollIndicator = false
-        self.contentInsetAdjustmentBehavior = .never
+        if #available(iOS 11.0, *) {
+            self.contentInsetAdjustmentBehavior = .never
+        } else {
+            // Fallback on earlier versions
+        }
         self.alwaysBounceVertical = false
         self.alwaysBounceHorizontal = true
         for _ in 0 ..< 3 {

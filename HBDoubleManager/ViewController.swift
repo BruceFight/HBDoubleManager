@@ -15,7 +15,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         manager = HBDoubleManager.init(frame: view.bounds, view: view)
-        manager?.scrollType = .limited
+        manager?.scrollType = .default
         let label = UIButton()
         label.setTitle("external", for: .normal)
         label.setTitleColor(.red, for: .normal)
@@ -39,12 +39,12 @@ class ViewController: UIViewController {
                            inner: 20,
                            outer: 20,
                            global: 15,
-                           titles: ["中","国"],//,"共","产","党","万","岁"
-                           images: nil,
-                           h_images: nil,
-                           textColors: nil,
-                           h_textColors: nil)
-        
+                           titles: ["课时详情","国"],//,"共","产","党","万","岁"
+                           images: ["bg_normal"],
+                           h_images: ["bg_high"],
+                           textColors: [.blue],
+                           h_textColors: [.purple])
+        manager?.hb_showRedView(tag: 0)
     }
     
     @objc func dosomething() -> () {

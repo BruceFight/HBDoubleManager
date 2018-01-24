@@ -79,7 +79,7 @@ class HBDoubleManager: UIView ,UIScrollViewDelegate {
         super.init(frame: frame)
         self.backgroundColor = view.backgroundColor
         self.clipsToBounds = true
-        self.frame = view.bounds
+        self.frame = frame
         self.setHostVc(view: view)
         view.addSubview(self)
         _hostView = view
@@ -96,8 +96,8 @@ class HBDoubleManager: UIView ,UIScrollViewDelegate {
                 _hostVc?.automaticallyAdjustsScrollViewInsets = false
             }
         }else if nextV.isKind(of: UIView.self) {
-            if let nextV = nextV.next as? UIView {
-                self.setHostVc(view: nextV)
+            if let _nextV = nextV as? UIView {
+                self.setHostVc(view: _nextV)
             }
         }
     }
@@ -235,6 +235,12 @@ extension HBDoubleManager {
         self.bottomClassView.delegate = self
         self.bottomClassView.headIndex = head
         self.addSubview(bottomClassView)
+    }
+    
+    /** get topicButton
+     */
+    public func hb_getTopicBtn(tag:Int) -> HBTopicButton {
+        return self.topClassView.hb_getTopicBtn(tag: tag)
     }
 
     /** hide redView

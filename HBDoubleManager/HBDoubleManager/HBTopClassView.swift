@@ -38,7 +38,11 @@ class HBTopClassView: UIScrollView {
         self.backgroundColor = UIColor.white
         self.showsVerticalScrollIndicator = false
         self.showsHorizontalScrollIndicator = false
-        self.contentInsetAdjustmentBehavior = .never
+        if #available(iOS 11.0, *) {
+            self.contentInsetAdjustmentBehavior = .never
+        } else {
+            // Fallback on earlier versions
+        }
         setTrackView()
     }
     
@@ -62,6 +66,14 @@ class HBTopClassView: UIScrollView {
                 sub.removeFromSuperview()
             }
         }
+        
+        var unifiedNormalColor : UIColor?
+        var unifiedHighColor : UIColor?
+        if textColors?.count == highTextColors?.count && textColors?.count == 1 {
+            unifiedNormalColor = textColors?.first
+            unifiedHighColor = highTextColors?.first
+        }
+        
         for index in 0 ..< titles.count {
             
             let topicBtn = HBTopicButton.init(frame: CGRect.zero)
@@ -86,14 +98,23 @@ class HBTopClassView: UIScrollView {
                     }
                 }
             }
-            if let textColors = textColors {
-                if let textColor = textColors.hb_object(for: index) {
-                    topicBtn.setNormalTextColorWith(normalTextColor:textColor)
+            if let _unifiedNormalColor = unifiedNormalColor {
+                topicBtn.setNormalTextColorWith(normalTextColor:_unifiedNormalColor)
+            }else {
+                if let textColors = textColors {
+                    if let textColor = textColors.hb_object(for: index) {
+                        topicBtn.setNormalTextColorWith(normalTextColor:textColor)
+                    }
                 }
             }
-            if let highTextColors = highTextColors {
-                if let highTextColor = highTextColors.hb_object(for: index) {
-                    topicBtn.setHighTextColorWith(highTextColor: highTextColor)
+            
+            if let _unifiedHighColor = unifiedHighColor {
+                topicBtn.setHighTextColorWith(highTextColor:_unifiedHighColor)
+            }else {
+                if let highTextColors = highTextColors {
+                    if let highTextColor = highTextColors.hb_object(for: index) {
+                        topicBtn.setHighTextColorWith(highTextColor: highTextColor)
+                    }
                 }
             }
             topicBtn.setTitleWith(title: titles[index])
@@ -106,11 +127,18 @@ class HBTopClassView: UIScrollView {
                         }
                     }
                 }
-                if let highTextColors = highTextColors {
-                    if let highTextColor = highTextColors.hb_object(for: index) {
-                        topicBtn.setHighTextColorWith(highTextColor: highTextColor)
+                if let _unifiedHighColor = unifiedHighColor {
+                    topicBtn.setHighTextColorWith(highTextColor:_unifiedHighColor)
+                    topTrackView.backgroundColor = _unifiedHighColor
+                }else {
+                    if let highTextColors = highTextColors {
+                        if let highTextColor = highTextColors.hb_object(for: index) {
+                            topicBtn.setHighTextColorWith(highTextColor: highTextColor)
+                            topTrackView.backgroundColor = highTextColor
+                        }
                     }
                 }
+                topicBtn.setSelected()
             }
 
             topicBtn.addTarget(self, action: #selector(jb_topicClicked(topic:)), for: .touchUpInside)
@@ -132,10 +160,6 @@ class HBTopClassView: UIScrollView {
             let topicBtn = topicBtns[index]
             let topicsOuterMargin = (index == 0) ? 0 : topicOuterMargin
             let realGlobalMargin = (index == 0) ? globalMargin : 0
-            
-            topBtnWidth = (titles[index] as NSString).size(withAttributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 12)]).width + 2 * topicInnerMargin + imageMarginWidth
-
-            contentSizeWidth += topBtnWidth + topicsOuterMargin + 2 * realGlobalMargin
             if let imgString = images?.hb_object(for: index) {
                 if let _ = UIImage.init(named: imgString) {
                     switch position {
@@ -148,6 +172,8 @@ class HBTopClassView: UIScrollView {
                     }
                 }
             }
+            topBtnWidth = (titles[index] as NSString).size(withAttributes: [NSAttributedStringKey.font:topicFont]).width + 2 * topicInnerMargin + imageMarginWidth
+            contentSizeWidth += topBtnWidth + topicsOuterMargin + 2 * realGlobalMargin
             topicBtn.sizeToFit()
             if let pre = preTopic {
                 topicBtn.frame = CGRect.init(x: pre.frame.maxX + topicsOuterMargin, y: 0, width: topBtnWidth, height: frame.height)
@@ -190,9 +216,9 @@ class HBTopClassView: UIScrollView {
     }
     
     @objc func jb_topicClicked(topic:HBTopicButton) -> () {
+        if selectedTopic == topic { return }
         let tTag = topic.tag
         let sTag = selectedTopic.tag
-        self.jb_setTopicInterface(topic: topic)
         if tTag > sTag {// 左移
             offsetRatioHandler?(2,tTag)
         }else if tTag < sTag {// 右移
